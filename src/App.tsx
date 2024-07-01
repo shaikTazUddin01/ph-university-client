@@ -1,10 +1,11 @@
+import MainLayout from "./component/layout/MainLayout"
 
 function App() {
 
 
   return (
     <>
-     <h1>Ph university</h1>
+    <MainLayout></MainLayout>
     </>
   )
 }
