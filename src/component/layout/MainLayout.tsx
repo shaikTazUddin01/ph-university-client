@@ -7,39 +7,58 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout>
+    <Layout style={{ height: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        {/* <div
+          style={{ color: "white", display: "flex", justifyContent: "center" }}
+        >
+        </div> */}
+        <div style={{color:'white',display:'flex',justifyContent:'center'}} >
+          <h1>PhU</h1>
+
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[
             {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
+              key: "addStudent",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: "Add Student",
+            },
+            {
+              key: "addFaculty",
+              label: "Add Faculty",
+              children: [
+                {
+                  key: "addFacultyCourse",
+                  label: "Add Course",
+                },
+                {
+                  key: "addTime",
+                  label: "Add Time",
+                },
+              ],
+            },
+            {
+              key: "addCourse",
+              label: "Add Course",
+            },
+            {
+              key: "addAcademicSemester",
+              label: "Add Academic Semester",
             },
           ]}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0,}}>
+        <Header style={{ padding: 0 }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -48,7 +67,7 @@ const MainLayout = () => {
               fontSize: "16px",
               width: 64,
               height: 64,
-              color:"white"
+              color: "white",
             }}
           />
         </Header>
@@ -57,11 +76,13 @@ const MainLayout = () => {
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
-            
           }}
         >
           This is main layout
         </Content>
+        <Footer style={{ textAlign: "center" }}>
+          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        </Footer>
       </Layout>
     </Layout>
   );
