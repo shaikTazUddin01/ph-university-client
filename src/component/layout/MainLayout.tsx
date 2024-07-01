@@ -7,6 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 const { Header, Sider, Content, Footer } = Layout;
 
 const MainLayout = () => {
@@ -23,6 +24,7 @@ const MainLayout = () => {
 
         </div>
         <Menu
+        
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
@@ -78,7 +80,7 @@ const MainLayout = () => {
             minHeight: 280,
           }}
         >
-          This is main layout
+          <Outlet></Outlet>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
