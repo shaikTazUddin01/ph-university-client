@@ -2,12 +2,13 @@ import { Button, Layout, Menu } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+ 
   // UserOutlined,
   // VideoCameraOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
+import { adminSidebarItems } from "../../routers/admin.routes";
 // import MenuItem from "antd/es/menu/MenuItem";
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -29,33 +30,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items ={[
-            {
-              key: "Dashboard",
-              icon: <UploadOutlined />,
-              label: <NavLink to={'/admin/dashboard'}>Dashboard</NavLink>,
-            },
-            {
-              key: "user management",
-              label: "User Management",
-              children: [
-                {
-                  key: "createAdmin",
-                  label: <NavLink to={'/admin/create-admin'}>Create Admin</NavLink>,
-                },
-                {
-                  key: "createFaculty",
-                  label:<NavLink to={'/admin/create-faculty'}>Create Faculty</NavLink>,
-                },
-                {
-                  key: "createStudent",
-                  label:<NavLink to={'/admin/create-student'}>Create Student</NavLink>,
-                },
-              ],
-            },
-           
-            
-          ]}
+          items ={adminSidebarItems}
         />
       </Sider>
       <Layout>
