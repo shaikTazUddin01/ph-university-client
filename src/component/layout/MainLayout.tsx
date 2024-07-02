@@ -3,11 +3,12 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  // UserOutlined,
+  // VideoCameraOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+// import MenuItem from "antd/es/menu/MenuItem";
 const { Header, Sider, Content, Footer } = Layout;
 
 const MainLayout = () => {
@@ -19,43 +20,41 @@ const MainLayout = () => {
           style={{ color: "white", display: "flex", justifyContent: "center" }}
         >
         </div> */}
-        <div style={{color:'white',display:'flex',justifyContent:'center'}} >
+        <div
+          style={{ color: "white", display: "flex", justifyContent: "center" }}
+        >
           <h1>PhU</h1>
-
         </div>
         <Menu
-        
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={[
+          items ={[
             {
-              key: "addStudent",
+              key: "Dashboard",
               icon: <UploadOutlined />,
-              label: "Add Student",
+              label: <NavLink to={'/admin/dashboard'}>Dashboard</NavLink>,
             },
             {
-              key: "addFaculty",
-              label: "Add Faculty",
+              key: "user management",
+              label: "User Management",
               children: [
                 {
-                  key: "addFacultyCourse",
-                  label: "Add Course",
+                  key: "createAdmin",
+                  label: <NavLink to={'/admin/create-admin'}>Create Admin</NavLink>,
                 },
                 {
-                  key: "addTime",
-                  label: "Add Time",
+                  key: "createFaculty",
+                  label:<NavLink to={'/admin/create-faculty'}>Create Faculty</NavLink>,
+                },
+                {
+                  key: "createStudent",
+                  label:<NavLink to={'/admin/create-student'}>Create Student</NavLink>,
                 },
               ],
             },
-            {
-              key: "addCourse",
-              label: "Add Course",
-            },
-            {
-              key: "addAcademicSemester",
-              label: "Add Academic Semester",
-            },
+           
+            
           ]}
         />
       </Sider>
