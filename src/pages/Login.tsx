@@ -1,10 +1,27 @@
+import { Button } from 'antd';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
+    const {register,handleSubmit}=useForm()
+
+    const onSubmit=(data)=>{
+        console.log(data);
+    }
     return (
-        <div>
-            <h1>this is login page</h1>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+
+
+            <div>
+                <label htmlFor="id">Id:</label>
+                <input type="text" id="id" {...register('id')} />
+            </div>
+            <div>
+                <label htmlFor="password">Password:</label>
+                <input type="text" id="password" {...register('password')} />
+            </div>
+            <Button htmlType='submit'>submit</Button>
+        </form>
     );
 };
 
