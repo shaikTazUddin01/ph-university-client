@@ -1,38 +1,24 @@
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
- 
+
   // UserOutlined,
   // VideoCameraOutlined,
 } from "@ant-design/icons";
+
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
 import { useState } from "react";
-import {  Outlet } from "react-router-dom";
-import { adminSidebarItems } from "../../routers/admin.routes";
+
 // import MenuItem from "antd/es/menu/MenuItem";
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        {/* <div
-          style={{ color: "white", display: "flex", justifyContent: "center" }}
-        >
-        </div> */}
-        <div
-          style={{ color: "white", display: "flex", justifyContent: "center" }}
-        >
-          <h1>PhU</h1>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items ={adminSidebarItems}
-        />
-      </Sider>
+        <Sidebar collapsed={collapsed}></Sidebar>
       <Layout>
         <Header style={{ padding: 0 }}>
           <Button
@@ -56,9 +42,6 @@ const MainLayout = () => {
         >
           <Outlet></Outlet>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
