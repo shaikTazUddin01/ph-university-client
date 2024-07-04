@@ -24,15 +24,15 @@ const Login = () => {
     };
     // console.log(userInFo);
     const res = await login(userInFo).unwrap();
-    // const decoded=verifyToken(res.data.accessToken)
-    // console.log(decoded);
+    const user=verifyToken(res.data.accessToken)
+    console.log(res);
     dispatch(
       setUser({
-        user: "",
+        user: user,
         token: res.data.accessToken,
       })
     );
-    console.log(res);
+   
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
