@@ -12,7 +12,7 @@ const userRole = {
   Student: "student",
 };
 
-const Sidebar = ({ collapsed }:{collapsed:boolean})=> {
+const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
   let sidebarItems;
   const role = "admin";
 
@@ -33,7 +33,7 @@ const Sidebar = ({ collapsed }:{collapsed:boolean})=> {
       <div
         style={{ color: "white", display: "flex", justifyContent: "center" }}
       >
-        <h1>PhU</h1>
+        <h1 className="pt-5 text-xl font-semibold">PhU</h1>
       </div>
       <Menu
         theme="dark"
