@@ -6,7 +6,7 @@ const AcademicSemester = () => {
     return <p>Loading.....</p>;
   }
   const academicSemester = data?.data;
-  console.log(academicSemester);
+  console.log("academic semester",academicSemester);
   return (
     <div>
       <h1>{academicSemester?.length} : academic semester</h1>

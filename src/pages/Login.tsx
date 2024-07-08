@@ -38,7 +38,7 @@ const Login = () => {
           token: res.data.accessToken,
         })
       );
-      toast.success("login success", { id: toastId });
+      toast.success("login success", { id: toastId, duration: 2000 });
       navigate(`/${user.role}/dashboard`);
     } catch (error) {
       toast.error("something is wrong", { id: toastId });
