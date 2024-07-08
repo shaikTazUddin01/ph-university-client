@@ -16,7 +16,7 @@ const Login = () => {
       password: "admin123",
     },
   });
-  const [login, { data, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useDispatch();
   //navigate
 
