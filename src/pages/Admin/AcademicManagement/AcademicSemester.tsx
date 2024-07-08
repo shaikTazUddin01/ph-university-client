@@ -9,7 +9,7 @@ const AcademicSemester = () => {
   console.log(academicSemester);
   return (
     <div>
-      <h1>{academicSemester?.length}</h1>
+      <h1>{academicSemester?.length} : academic semester</h1>
     </div>
   );
 };
