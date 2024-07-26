@@ -1,37 +1,39 @@
 import { Button } from "antd";
-import React from "react";
-import { useForm } from "react-hook-form";
+
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser, TUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utiles/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
+import PhForm from "../component/form/PhForm";
+import PhInput from "../component/form/PhInput";
 // import Password from "antd/es/input/Password";
 
 const Login = () => {
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      id: "A-0002",
-      password: "admin123",
-    },
-  });
+  const defaultValues = {
+    id: "A-0002",
+    password: "admin123",
+  };
+
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
   //navigate
 
   const navigate = useNavigate();
   const onSubmit = async (data: Record<string, string>) => {
+    console.log(data);
     const toastId = toast.loading("Loading...");
     try {
       const userInFo = {
         id: data.id,
         password: data.password,
       };
-      // console.log(userInFo);
       const res = await login(userInFo).unwrap();
+      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
-      // console.log(user);
+      console.log(user);
       dispatch(
         setUser({
           user: user,
@@ -50,34 +52,21 @@ const Login = () => {
         <h1 className="text-center text-white font-bold text-2xl pb-2">
           Login
         </h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-          <div className="flex">
-            {/* <label htmlFor="id"className="flex-1">Id:</label> */}
-            <input
-              type="text"
-              id="id"
-              {...register("id")}
-              placeholder="Enter Your Id"
-              className="rounded-md px-2 py-1"
-            />
-          </div>
-          <div className="flex">
-            {/* <label htmlFor="password" className="flex-1">Password:</label> */}
-            <input
-              type="text"
-              id="password"
-              {...register("password")}
-              placeholder="Enter Your Id"
-              className="rounded-md px-2 py-1"
-            />
-          </div>
+        <PhForm onSubmit={onSubmit} defaultValues={defaultValues}>
+          <PhInput type={"text"} name={"id"} label={"Id : "}></PhInput>
 
-          <div className="flex justify-center">
+          <PhInput
+            type={"text"}
+            name={"password"}
+            label={"password : "}
+          ></PhInput>
+
+          <div className="flex justify-center mt-2">
             <Button htmlType="submit" className="text-lg font-semibold">
               submit
             </Button>
           </div>
-        </form>
+        </PhForm>
       </div>
     </div>
   );
