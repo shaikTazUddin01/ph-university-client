@@ -15,7 +15,7 @@ const PhSelect = ({ label, name, options }: TPhSelectProps)=> {
   return (
     <Controller
       name={name}
-      render={({ field }) => (
+      render={({ field ,fieldState:{error}}) => (
         <Form.Item label={`${label} :`}>
           <Select
             defaultValue={`--- Select ${label} ---`}
@@ -23,6 +23,7 @@ const PhSelect = ({ label, name, options }: TPhSelectProps)=> {
             {...field}
             options={options}
           />
+          {error && <small className="text-red-600">{error?.message}</small>}
         </Form.Item>
       )}
     />

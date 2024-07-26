@@ -8,7 +8,15 @@ export const academicSemesterApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    createAcademicSemester: builder.mutation({
+      query: ({ semesterData }) => ({
+        
+        url: "/academic-semesters",
+        method: "POST",
+        body: semesterData,
+      }),
+    }),
   }),
 });
 
-export const { useAcademicSemesterQuery } = academicSemesterApi;
+export const { useAcademicSemesterQuery ,useCreateAcademicSemesterMutation} = academicSemesterApi;
