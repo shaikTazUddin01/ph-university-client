@@ -25,11 +25,11 @@ const MainLayout = () => {
     toast.warning("You Are Logged Out")
   };
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ height: "100%" }}>
       <Sidebar collapsed={collapsed}></Sidebar>
 
       <Layout>
-        <Header style={{ padding: 0 }} className="flex justify-between">
+        <Header style={{ padding: 0 }} className="flex justify-between sticky top-0 z-10" >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

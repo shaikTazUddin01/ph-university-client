@@ -32,7 +32,7 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
   }
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Sider trigger={null} collapsible collapsed={collapsed} style={{height:'100vh', position:'sticky', top:'0'}}>
       <div
         style={{ color: "white", display: "flex", justifyContent: "center" }}
       >
