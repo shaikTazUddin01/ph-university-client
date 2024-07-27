@@ -17,3 +17,5 @@ export type TRoute = {
     label: ReactNode;
     children?: TAdminSidebarItem[];
   };
+
+  export * from './global'

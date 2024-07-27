@@ -27,20 +27,18 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   FetchArgs,
   BaseQueryApi,
   DefinitionType
-
-> = async (args, api, extraOptions) :Promise<any> => {
+> = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
-
   if (result?.error?.status == 404) {
-    toast.error("user not found")
+    // console.log(result.error.data.message);
+    toast.error("not found");
   }
   if (result?.error?.status == 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "post",
       credentials: "include",
     });
-
 
     const data = await res.json();
 

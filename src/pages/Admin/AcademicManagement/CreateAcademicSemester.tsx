@@ -8,6 +8,9 @@ import { nameOptions } from "../../../constants/semester";
 import { monthOptions } from "../../../constants/global";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { useCreateAcademicSemesterMutation } from "../../../redux/features/academicSemester/academicSemesterApi";
+import { toast } from "sonner";
+import { TResponse } from "../../../types/global";
 
 //get current year
 const currentYear = new Date().getFullYear();
@@ -17,10 +20,11 @@ const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
 }));
 
 const CreateAcademicSemester = () => {
-  // const [createSemester,result]=useCreateAcademicSemesterMutation()
 
+const [createAcademicSemester]=useCreateAcademicSemesterMutation()
   //handle submit
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async(data) => {
+    const toastId=toast.loading('creating...')
     const name = nameOptions[Number(data?.name) - 1]?.label;
     const semesterData = {
       name,
@@ -29,8 +33,20 @@ const CreateAcademicSemester = () => {
       startMonth: data?.startMonth,
       endMonth: data?.endMonth,
     };
-    // createSemester(semesterData)
-    console.log(semesterData);
+   
+    try {
+      console.log(semesterData);
+      const res= await createAcademicSemester(semesterData) as TResponse
+      console.log(res);
+      if (res?.error) {
+        toast.error(res?.error?.data?.message,{id:toastId,duration:1000})
+      }else{
+        toast.success("created a new semester",{id:toastId,duration:1000})
+      }
+    } catch (error) {
+      toast.error('something is wrong',{id:toastId,duration:1000})
+
+    }
   };
 
   const academicSemesterSchema = z.object({
@@ -41,8 +57,8 @@ const CreateAcademicSemester = () => {
   });
 
   return (
-    <Flex justify="center" align="center" className="">
-      <Col span={11}>
+    <Flex justify="center" align="center" >
+      <Col span={11} className="bg-gray-300 p-10 rounded-xl">
         <PhForm
           onSubmit={onSubmit}
           resolver={zodResolver(academicSemesterSchema)}
