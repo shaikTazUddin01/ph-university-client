@@ -1,3 +1,5 @@
+import {  TResponseRedux } from "../../../types";
+import { TAcademicFaculty } from "../../../types/academicFaculty.type";
 import { baseApi } from "../../api/baseApi";
 
 export const academicFacultyApi = baseApi.injectEndpoints({
@@ -14,7 +16,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
             url:"/academic-faculty/academic-faculty",
             method:"GET"
         }),
-        transformResponse:(response)=>{
+        transformResponse:(response:TResponseRedux<TAcademicFaculty[]>)=>{
           // console.log("response=>",response);
 
           return(
