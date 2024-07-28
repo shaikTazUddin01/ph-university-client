@@ -13,7 +13,16 @@ export const academicFacultyApi = baseApi.injectEndpoints({
         query:()=>({
             url:"/academic-faculty/academic-faculty",
             method:"GET"
-        })
+        }),
+        transformResponse:(response)=>{
+          // console.log("response=>",response);
+
+          return(
+            {
+              data:response?.data
+            }
+          )
+        }
     })
   }),
 });
