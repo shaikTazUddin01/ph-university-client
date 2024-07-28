@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useCreateAcademicSemesterMutation } from "../../../redux/features/academicSemester/academicSemesterApi";
 import { toast } from "sonner";
 import { TResponse } from "../../../types/global";
+import { TacademicSemester } from "../../../types/academicSemester.type";
 
 //get current year
 const currentYear = new Date().getFullYear();
@@ -36,7 +37,7 @@ const [createAcademicSemester]=useCreateAcademicSemesterMutation()
    
     try {
       console.log(semesterData);
-      const res= await createAcademicSemester(semesterData) as TResponse
+      const res= await createAcademicSemester(semesterData) as TResponse<TacademicSemester>
       console.log(res);
       if (res?.error) {
         toast.error(res?.error?.data?.message,{id:toastId,duration:1000})
