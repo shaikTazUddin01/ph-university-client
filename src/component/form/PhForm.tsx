@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 
 type TFormConfig = {
-  defaultValues?: Record<string, FieldValues>;
+  defaultValues?: Record<string, any>;
   resolver?:any;
 };
 type TFormProps = {
@@ -19,6 +19,7 @@ type TFormProps = {
 const PhForm = ({ onSubmit, children, defaultValues,resolver }: TFormProps) => {
   // const methods = useForm();
   // console.log(resolver);
+  // console.log(defaultValues);
   const formConfig: TFormConfig = {};
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;

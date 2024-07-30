@@ -1,52 +1,89 @@
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PhForm from "../../../component/form/PhForm";
 import PhInput from "../../../component/form/PhInput";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import PhSelect from "../../../component/form/PhSelect";
 import { BloodGroupOptions, GenderOptions } from "../../../constants/global";
 import PhDatePicker from "../../../component/form/PhDatePicker";
 import { useAcademicSemesterQuery } from "../../../redux/features/academicSemester/academicSemesterApi";
 import { useGetAcademicDepartmentQuery } from "../../../redux/features/academicDepartment/academicDepertmentApi";
+import { useCreateStudentMutation } from "../../../redux/features/academicDepartment/studentApi";
+
+const studentDefaultValues = {
+  name: {
+    firstName: "Shaik",
+    middleName: "taz",
+    lastName: "uddin",
+  },
+  gender: "male",
+  // dateOfBirth: "1990-5-10",
+  email: "tazudding@gmail.com",
+  contactNo: "01865854785",
+  emergencyContactNo: "0245478784754",
+  bloodgroup: "A+",
+  presentAddress: "jessore",
+  permanentAddress: "jessore",
+
+  guardian: {
+    fatherName: "kamal",
+    fatherOccupation: "jamal",
+    fatherContactNo: "124542124542",
+    motherName: "tomarl",
+    motherOccupation: "damal",
+    motherContactNo: "1545121212",
+  },
+
+  localGuardian: {
+    name: "damal",
+    occupation: "kamla",
+    contactNo: "45645545",
+    address: "5454542",
+  },
+  admissionSemester: "666811bfba9505431ea1f997",
+  academicDepartment: "666812afba9505431ea1f99f",
+};
 
 const CreateStudent = () => {
   //get academic department data
   const { data: AData } = useGetAcademicDepartmentQuery(undefined);
   //get academic semester data
   const { data: sData, isLoading } = useAcademicSemesterQuery(undefined);
-// academic semester options
+  // academic semester options
+  const [createStudent] = useCreateStudentMutation();
   const academicSemesterOptions =
     sData?.data?.map((item) => ({
       key: item?._id,
       label: `${item?.name} ${item?.year}`,
-      value: item.name,
+      value: item._id,
     })) || [];
-    // academic Department options
+  // academic Department options
   const academicDepartmentOptions =
     AData?.data?.map((item) => ({
       key: item?._id,
       label: item?.name,
-      value: item.name,
+      value: item._id,
     })) || [];
-
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
   //   console.log(sData?.data);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     // console.log(data);
 
-    const studentData={
-      password:"student123",
-      studentInfo:{
-        data
-      }
-    }
-
+    const studentData = {
+      password: "student123",
+      studentInfo: data,
+    };
+    console.log(data);
     const formData = new FormData();
 
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data?.image);
+    const res = await createStudent(formData);
+
+    console.log(res);
 
     //! this for development
     console.log(Object.fromEntries(formData));
@@ -55,7 +92,7 @@ const CreateStudent = () => {
   return (
     <Row>
       <Col span={24} className="bg-gray-300 p-5">
-        <PhForm onSubmit={onSubmit}>
+        <PhForm onSubmit={onSubmit} defaultValues={studentDefaultValues}>
           {/* personal Information */}
           <Divider>Personal InFo.</Divider>
           <Row gutter={8}>
@@ -101,6 +138,21 @@ const CreateStudent = () => {
                 options={BloodGroupOptions}
               ></PhSelect>
             </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange,value, ...field } }) => (
+                  <Form.Item>
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
+              />
+            </Col>
           </Row>
           {/* Contact Information */}
           <Divider>Contact InFo.</Divider>
@@ -108,6 +160,7 @@ const CreateStudent = () => {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhInput label="Email" name="email" type="email"></PhInput>
             </Col>
+
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhInput label="Contact" name="contactNo" type="text"></PhInput>
             </Col>
@@ -218,7 +271,7 @@ const CreateStudent = () => {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhSelect
                 label="Academic Semester"
-                name="academicSemester"
+                name="admissionSemester"
                 options={academicSemesterOptions}
               ></PhSelect>
             </Col>
