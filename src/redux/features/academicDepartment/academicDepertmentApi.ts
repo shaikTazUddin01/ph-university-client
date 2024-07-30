@@ -4,11 +4,12 @@ const academicDepartmentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAcademicDepartment: builder.query({
       query: () => ({
-        url:'/academic-department',
-        method:"GET"
+        url: "/academic-department",
+        method: "GET",
       }),
     }),
+    
   }),
 });
 
-export const{useGetAcademicDepartmentQuery}=academicDepartmentApi
+export const { useGetAcademicDepartmentQuery } = academicDepartmentApi;

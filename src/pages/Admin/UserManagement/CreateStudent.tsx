@@ -7,7 +7,8 @@ import { BloodGroupOptions, GenderOptions } from "../../../constants/global";
 import PhDatePicker from "../../../component/form/PhDatePicker";
 import { useAcademicSemesterQuery } from "../../../redux/features/academicSemester/academicSemesterApi";
 import { useGetAcademicDepartmentQuery } from "../../../redux/features/academicDepartment/academicDepertmentApi";
-import { useCreateStudentMutation } from "../../../redux/features/academicDepartment/studentApi";
+import { useCreateStudentMutation } from "../../../redux/features/userManagement/userManagementApi"
+import { toast } from "sonner";
 
 const studentDefaultValues = {
   name: {
@@ -58,7 +59,7 @@ const CreateStudent = () => {
     })) || [];
   // academic Department options
   const academicDepartmentOptions =
-    AData?.data?.map((item) => ({
+    AData?.data?.map((item:any) => ({
       key: item?._id,
       label: item?.name,
       value: item._id,
@@ -83,6 +84,9 @@ const CreateStudent = () => {
     formData.append("file", data?.image);
     const res = await createStudent(formData);
 
+    if (res.data) {
+      toast.success("new student created successfully")
+    }
     console.log(res);
 
     //! this for development

@@ -18,3 +18,5 @@ export type TResponse<T> = {
 
 
 export type TResponseRedux<T> =TResponse<T> & BaseQueryApi 
+
+export * from "./userManagement/student.type"
