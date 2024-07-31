@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { Button, Pagination, Space, Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { useGetStudentsQuery } from "../../../redux/features/userManagement/userManagementApi";
+import { Link } from "react-router-dom";
 // import { TStudnet } from "../../../types";
 
 type TDataType = {
   key: React.Key;
   fullname: string;
   id: string;
+  email: string;
+  contactNo: string;
 };
 
-
 const StudentData = () => {
-
-    const [page,setPage]=useState(1);
+  const [page, setPage] = useState(1);
 
   const {
     data: StudentData,
@@ -51,24 +52,41 @@ const StudentData = () => {
       dataIndex: "id",
     },
     {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Contact No.",
+      dataIndex: "contactNo",
+    },
+    {
       title: "Action",
       key: "action",
-      render: () => (
-        <Space>
-          <Button>Details</Button>
-          <Button>Update</Button>
-          <Button>Status</Button>
-        </Space>
-      ),
+      render: (item) => {
+        console.log("item-->",item);
+        return (
+          <Space>
+            <Link to={`/admin/student-data/${item?.key}`}>
+            <Button>Details</Button>
+            </Link>
+            <Button>Update</Button>
+            <Button>Status</Button>
+          </Space>
+        );
+      },
       width: "1%",
     },
   ];
 
-  const tableData = StudentData?.data?.map(({ fullname, id, _id }) => ({
-    id,
-    key: _id,
-    fullname,
-  }));
+  const tableData = StudentData?.data?.map(
+    ({ fullname, id, _id, email, contactNo }) => ({
+      id,
+      key: _id,
+      fullname,
+      email,
+      contactNo,
+    })
+  );
 
   //   console.log(tableData);
 
@@ -91,7 +109,12 @@ const StudentData = () => {
         dataSource={tableData}
         onChange={onChange}
       />
-      <Pagination onChange={(value)=>setPage(value)} pageSize={metaData?.limit} total={metaData?.total}></Pagination>
+      <Pagination
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+      ></Pagination>
     </div>
   );
 };
