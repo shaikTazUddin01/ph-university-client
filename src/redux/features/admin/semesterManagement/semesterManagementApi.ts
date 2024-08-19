@@ -10,6 +10,7 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags:['semester']
     }),
     registratedSemester: builder.query({
       query: () => ({
@@ -21,7 +22,8 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         return{
           data:response?.data
         }    
-      }
+      },
+      providesTags:['semester']
     }),
     updateSemesterRegistration: builder.mutation({
       query: (args) => ({
@@ -29,7 +31,9 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: {status:args.status},
       }),
+      invalidatesTags:['semester']
     }),
+    
   }),
 });
 

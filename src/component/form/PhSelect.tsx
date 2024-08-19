@@ -4,23 +4,27 @@ import { Controller } from "react-hook-form";
 type TPhSelectProps = {
   label: string;
   name: string;
-  options: {
-    key?:string;
-    value: string;
-    label: string;
-    disabled?: boolean;
-  }[] | undefined;
+  options:
+    | {
+        key?: string;
+        value: string;
+        label: string;
+        disabled?: boolean;
+      }[]
+    | undefined;
+  mode?: "multiple" | undefined;
 };
 
-const PhSelect = ({ label, name, options }: TPhSelectProps)=> {
+const PhSelect = ({ label, name, options, mode }: TPhSelectProps) => {
   return (
     <Controller
       name={name}
-      render={({ field ,fieldState:{error}}) => (
+      render={({ field, fieldState: { error } }) => (
         <Form.Item label={`${label} :`}>
           <Select
-            defaultValue={`--- Select ${label} ---`}
+            placeholder={`Select ${label}`}
             style={{ width: "100%" }}
+            mode={mode}
             {...field}
             options={options}
           />
