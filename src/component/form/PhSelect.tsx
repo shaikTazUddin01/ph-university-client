@@ -9,7 +9,7 @@ type TPhSelectProps = {
     value: string;
     label: string;
     disabled?: boolean;
-  }[];
+  }[] | undefined;
 };
 
 const PhSelect = ({ label, name, options }: TPhSelectProps)=> {
