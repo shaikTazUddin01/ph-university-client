@@ -1,33 +1,86 @@
-import React from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Dropdown, Table, Tag } from "antd";
 import type { TableColumnsType } from "antd";
 
-import { useRegistratedSemesterQuery } from "../../../redux/features/admin/semesterManagement/semesterManagementApi";
-// import { TStudnet } from "../../../types";
+import { useRegistratedSemesterQuery, useUpdateSemesterRegistrationMutation } from "../../../redux/features/admin/semesterManagement/semesterManagementApi";
+import moment from "moment";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
 type TDataType = {
-  
+  key:string;
   name: string;
   startDate: string;
   endDate: string;
   status: string;
 };
 
+
+const items=[
+  {
+    label:'UpComing',
+    key:"UPCOMING"
+  },
+  {
+    label:'OnGoing',
+    key:"ONGOING"
+  },
+  {
+    label:'Ended',
+    key:"ENDED"
+  },
+]
+
 const RegistretedSemester = () => {
   const { data: registretedSemester, isFetching } =
     useRegistratedSemesterQuery(undefined);
-console.log(registretedSemester);
+    
+const [updateSemesterStatus]=useUpdateSemesterRegistrationMutation()
+    const [semesterId,setSemesterId]=useState(null)
+
+  // console.log(registretedSemester);
   const registretedSemesterData = registretedSemester?.data;
-  console.log(registretedSemesterData);
+  // console.log(registretedSemesterData);
+
+const handleUpdateStatus:SubmitHandler<FieldValues>=async(data)=>{
+  const updateData={
+    id:semesterId,
+    status:data.key
+  }
+  console.log(updateData);
+  const res=await updateSemesterStatus(updateData)
+
+  console.log(res);
+}
+
+const menuProps={
+  items,
+  onClick:handleUpdateStatus
+}
+
 
   const columns: TableColumnsType<TDataType> = [
     {
       title: "Name",
       dataIndex: "name",
+      key: "name",
     },
     {
       title: "Status",
       dataIndex: "status",
+      key: "status",
+      render: (item) => {
+        let color;
+        if (item === "UPCOMING") {
+          color = "blue";
+        }
+        if (item === "ONGOING") {
+          color = "green";
+        }
+        if (item === "ENDED") {
+          color = "red";
+        }
+        return <Tag color={color}>{item}</Tag>;
+      },
     },
     {
       title: "Start Date",
@@ -41,11 +94,13 @@ console.log(registretedSemester);
       title: "Action",
       key: "action",
       render: (item) => {
-        console.log("item-->", item);
+        // console.log("item-->", item);
         return (
-          <Space>
-            <Button>Update</Button>
-          </Space>
+          <Dropdown menu={menuProps} >
+           <Button onClick={()=>setSemesterId(item.key)}>
+            update
+           </Button>
+          </Dropdown>
         );
       },
       width: "1%",
@@ -53,10 +108,11 @@ console.log(registretedSemester);
   ];
 
   const tableData = registretedSemesterData?.map(
-    ({ academicSemester, startDate, endDate, status }) => ({
+    ({ _id,academicSemester, startDate, endDate, status }) => ({
+      key:_id,
       name: `${academicSemester.name} ${academicSemester.year}`,
-      startDate,
-      endDate,
+      startDate: moment(new Date(startDate)).format("MMMM"),
+      endDate: moment(new Date(endDate)).format("MMMM"),
       status,
     })
   );

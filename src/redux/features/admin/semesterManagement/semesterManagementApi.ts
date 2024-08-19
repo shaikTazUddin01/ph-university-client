@@ -23,8 +23,15 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         }    
       }
     }),
+    updateSemesterRegistration: builder.mutation({
+      query: (args) => ({
+        url: `/semesterRegistration/${args.id}`,
+        method: "PATCH",
+        body: {status:args.status},
+      }),
+    }),
   }),
 });
 
-export const { useCreateSemesterRegistrationMutation ,useRegistratedSemesterQuery} =
+export const { useCreateSemesterRegistrationMutation ,useRegistratedSemesterQuery,useUpdateSemesterRegistrationMutation} =
   semesterManagementApi;
