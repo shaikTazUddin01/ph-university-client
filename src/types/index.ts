@@ -19,3 +19,4 @@ export type TAdminSidebarItem = {
 }| undefined;
 
 export * from "./global";
+export * from "./semesterRegistration.type";

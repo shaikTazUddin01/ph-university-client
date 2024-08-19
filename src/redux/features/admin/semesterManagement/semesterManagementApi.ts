@@ -1,3 +1,4 @@
+import { TResponseRedux, TSemesterRegistration } from "../../../../types";
 import { baseApi } from "../../../api/baseApi";
 
 export const semesterManagementApi = baseApi.injectEndpoints({
@@ -10,8 +11,20 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    registratedSemester: builder.query({
+      query: () => ({
+        url: "/semesterRegistration",
+        method: "GET",
+      }),
+      transformResponse:(response:TResponseRedux<TSemesterRegistration[]>)=>{
+        console.log("object--->",response);
+        return{
+          data:response?.data
+        }    
+      }
+    }),
   }),
 });
 
-export const { useCreateSemesterRegistrationMutation } =
+export const { useCreateSemesterRegistrationMutation ,useRegistratedSemesterQuery} =
   semesterManagementApi;
