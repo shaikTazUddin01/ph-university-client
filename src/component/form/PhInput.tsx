@@ -5,9 +5,10 @@ type TInputProps = {
   name: string;
   type: string;
   label?: string;
+  disabled:boolean;
 };
 
-const PhInput = ({ type, name, label }:TInputProps) => {
+const PhInput = ({ type, name, label,disabled }:TInputProps) => {
   return (
     <div className="">
      <Form.Item label={label}>
@@ -19,6 +20,7 @@ const PhInput = ({ type, name, label }:TInputProps) => {
             {...field}
             type={type}
             id={name}
+            disabled={disabled}
             className="rounded-md px-2 py-1"
             placeholder={`Enter Your ${name}`}
           />
