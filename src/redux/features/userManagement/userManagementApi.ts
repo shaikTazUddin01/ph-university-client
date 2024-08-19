@@ -41,14 +41,35 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
-    getSingleStudent:builder.query({
-      query:(studentId)=>({
-        url:`/students/${studentId}`,
-        method:"GET"
-      })
-    })
+    getSingleStudent: builder.query({
+      query: (studentId) => ({
+        url: `/students/${studentId}`,
+        method: "GET",
+      }),
+    }),
+    getFaculty: builder.query({
+      query: () => ({
+        url: "/faculty",
+        method: "GET",
+      }),
+    }),
+    addFaculty: builder.mutation({
+      query: (args) => {
+        console.log("--->>", {faculties:args.faculties});
+        return {
+          url: `/course/${args?.id}/assign-faculties`,
+          method: "PUT",
+          body:{faculties:args.faculties},
+        };
+      },
+    }),
   }),
 });
 
-export const { useCreateStudentMutation, useGetStudentsQuery ,useGetSingleStudentQuery } =
-  userManagementApi;
+export const {
+  useCreateStudentMutation,
+  useGetStudentsQuery,
+  useGetSingleStudentQuery,
+  useGetFacultyQuery,
+  useAddFacultyMutation,
+} = userManagementApi;

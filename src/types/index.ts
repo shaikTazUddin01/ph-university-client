@@ -20,3 +20,4 @@ export type TAdminSidebarItem = {
 
 export * from "./global";
 export * from "./semesterRegistration.type";
+export * from "./courseManagement/courseManagement.type";

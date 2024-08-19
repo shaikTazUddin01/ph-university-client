@@ -42,9 +42,9 @@ const courseOption=courses.data.map((course:Record<string,any>)=>({
     const courseData = {
       ...data,
       credits:Number(data.credits),
-      code:Number(data.code),
+      // code:Number(data.code),
       isDeleted:false,
-      perRequisteCourses:data.perRequisteCourses.map((item:ReactNode)=>({
+      perRequisteCourses:data?.perRequisteCourses?.map((item:ReactNode)=>({
         courses:item,
         isDeleted:false
       }))
