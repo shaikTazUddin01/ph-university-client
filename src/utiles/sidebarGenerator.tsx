@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { TAdminSidebarItem, TUserPath } from "../types";
+// import { ItemType, MenuItemType } from "antd/es/menu/interface";
 
-export const sidebarGenerator = (items: TUserPath[], role :string) => {
+export const sidebarGenerator = (items: TUserPath[], role :string) : any=> {
   const adminSidebarItems = items.reduce((acc: TAdminSidebarItem[], item) => {
     if (item.name && item.path) {
       acc.push({

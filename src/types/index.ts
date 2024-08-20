@@ -6,14 +6,14 @@ export type TRoute = {
 };
 
 export type TUserPath = {
-  name: string;
+  name?: string ;
   path?: string;
   element?: ReactNode;
   children?: TUserPath[];
 };
 
 export type TAdminSidebarItem = {
-  key: string;
+  key: string |undefined;
   label: ReactNode;
   children?: TAdminSidebarItem[] ;
 }| undefined;

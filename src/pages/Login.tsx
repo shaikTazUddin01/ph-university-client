@@ -13,8 +13,8 @@ import PhInput from "../component/form/PhInput";
 
 const Login = () => {
   const defaultValues = {
-    id: "A-0002",
-    password: "admin123",
+    id: "2030010001",
+    password: "student123",
   };
 
   const [login] = useLoginMutation();

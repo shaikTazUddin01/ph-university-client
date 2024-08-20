@@ -5,7 +5,8 @@ import { adminPaths } from "../../routers/admin.routes";
 import { studentPaths } from "../../routers/student.routes";
 import { facultyPaths } from "../../routers/faculty.routes";
 import { useAppSelector } from "../../redux/features/hooks";
-import { currentUser } from "../../redux/features/auth/authSlice";
+import { currentToken, TUser } from "../../redux/features/auth/authSlice";
+import { verifyToken } from "../../utiles/verifyToken";
 const { Sider } = Layout;
 
 const userRole = {
@@ -15,11 +16,16 @@ const userRole = {
 };
 
 const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
-  const user=useAppSelector(currentUser)
+  const token = useAppSelector(currentToken);
   let sidebarItems;
-  // const role = "admin";
 
-  switch (user!.role) {
+  let user;
+  if (token) {
+    user = verifyToken(token as string);
+  }
+  // const role = "admin";
+  console.log(user);
+  switch ((user as TUser)!.role) {
     case userRole.Admin:
       sidebarItems = sidebarGenerator(adminPaths, userRole.Admin);
       break;
@@ -32,7 +38,12 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
   }
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} style={{height:'100vh', position:'sticky', top:'0'}}>
+    <Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      style={{ height: "100vh", position: "sticky", top: "0" }}
+    >
       <div
         style={{ color: "white", display: "flex", justifyContent: "center" }}
       >

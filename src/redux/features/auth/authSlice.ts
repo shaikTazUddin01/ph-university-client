@@ -6,7 +6,7 @@ import { RootState } from "../../store";
 export type TUser = {
   exp: number;
   iat: number;
-  role: string;
+  role: string ;
   userId: string;
 };
 
@@ -37,5 +37,6 @@ export const authSlice = createSlice({
 export const { setUser, logout } = authSlice.actions;
 
 export const currentUser=(state:RootState)=>state.auth.user
+export const currentToken=(state:RootState)=>state.auth.token
 
 export default authSlice.reducer;
