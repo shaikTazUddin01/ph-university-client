@@ -32,7 +32,7 @@ useEffect(()=>{
 },[onValueChange,inputValue])
 
 
-console.log(inputValue);
+// console.log(inputValue);
 
   return (
     <Controller

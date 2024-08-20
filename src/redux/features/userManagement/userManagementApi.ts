@@ -69,6 +69,16 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+   findFacultyWithCourse: builder.query({
+      query: (id) => {
+        // console.log("--->>", {faculties:args.faculties});
+        return {
+          url: `/course/${id}/assign-faculties`,
+          method: "GET",
+          
+        };
+      },
+    }),
   }),
 });
 
@@ -79,4 +89,5 @@ export const {
   useGetFacultyQuery,
   useGetFacultyByCourseQuery,
   useAddFacultyMutation,
+  useFindFacultyWithCourseQuery
 } = userManagementApi;

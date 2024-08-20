@@ -1,5 +1,4 @@
-import { DatePicker, Form } from "antd";
-import React from "react";
+import {  Form, TimePicker } from "antd";
 import { Controller } from "react-hook-form";
 
 type TDatePickerProps = {
@@ -7,7 +6,7 @@ type TDatePickerProps = {
   label?: string;
 };
 
-const PhDatePicker = ({  name, label }:TDatePickerProps) => {
+const PhTimePicker = ({  name, label }:TDatePickerProps) => {
   return (
     <div className="">
      <Form.Item label={label}>
@@ -16,10 +15,10 @@ const PhDatePicker = ({  name, label }:TDatePickerProps) => {
         name={name}
         
         render={({ field }) => (
-        <DatePicker
+        <TimePicker
         {...field} style={{width:'100%'}}
          className="rounded-md px-2 py-1"
-         format={"HH:MM"}
+         format={"HH:mm"}
         />
         )}
       />
@@ -28,4 +27,4 @@ const PhDatePicker = ({  name, label }:TDatePickerProps) => {
   );
 };
 
-export default PhDatePicker;
+export default PhTimePicker;

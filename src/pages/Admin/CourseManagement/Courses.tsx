@@ -118,7 +118,7 @@ const AddFaculty = ({ item }: any) => {
     try {
        const res=await addFaculty(facultyData) as TResponse<any>
     
-    console.log(res);
+    // console.log(res);
     if (res?.error) {
       toast.error(res?.error?.data?.message, { id: toastId, duration: 1000 });
     } else {

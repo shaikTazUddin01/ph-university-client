@@ -40,7 +40,7 @@ const StudentData = () => {
   }
   //   const stableData = StudentData?.data?.result;
 
-  console.log(StudentData);
+  // console.log(StudentData);
 
   const columns: TableColumnsType<TDataType> = [
     {
@@ -63,7 +63,7 @@ const StudentData = () => {
       title: "Action",
       key: "action",
       render: (item) => {
-        console.log("item-->",item);
+        // console.log("item-->",item);
         return (
           <Space>
             <Link to={`/admin/student-data/${item?.key}`}>

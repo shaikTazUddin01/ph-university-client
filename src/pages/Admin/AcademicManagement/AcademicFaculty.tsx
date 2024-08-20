@@ -8,7 +8,7 @@ export type TTableData=Pick<TAcademicFaculty,'name'> &{no:number;key:string}
 
 const AcademicFaculty = () => {
   const { data: academicFaculty } = useGetAcademicFacultyQuery(undefined);
-  console.log(academicFaculty);
+  // console.log(academicFaculty);
   const columns: TableColumnsType<TTableData> = [
     {
       title: "No.",

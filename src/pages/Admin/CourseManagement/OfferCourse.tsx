@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useGetAcademicFacultyQuery } from "../../../redux/features/academicFaculty/academicFacultyApi";
 import PhSelectWithWatch from "../../../component/form/PhSelectWithWatch";
 import PhInput from "../../../component/form/PhInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRegistratedSemesterQuery } from "../../../redux/features/admin/semesterManagement/semesterManagementApi";
 import { useGetAcademicDepartmentQuery } from "../../../redux/features/academicDepartment/academicDepertmentApi";
 import PhSelect from "../../../component/form/PhSelect";
@@ -14,10 +14,13 @@ import {
   useAddOfferedCourseMutation,
   useGetAllCoursesQuery,
 } from "../../../redux/features/admin/CourseManagement/CourseManagementApi";
-import { useGetFacultyQuery } from "../../../redux/features/userManagement/userManagementApi";
+
 import { dayOptions } from "../../../constants/global";
 import { TResponse } from "../../../types";
 import { toast } from "sonner";
+import PhTimePicker from "../../../component/form/PhTimePicker";
+import { useFindFacultyWithCourseQuery } from "../../../redux/features/userManagement/userManagementApi";
+
 
 const OfferCourse = () => {
   // get academic faculty
@@ -33,31 +36,20 @@ const OfferCourse = () => {
   // get academic course
   const { data: course, isLoading: cLoading } =
     useGetAllCoursesQuery(undefined);
-  // state management
+  // state management get courseid
   const [courseid, setCourseId] = useState("");
-  const [faculty, setFaculty] = useState(null);
-  const [facultyOptions, setFacultyOptions] = useState(undefined);
+  
+// get faculty with course
+  const {data:courseFaculty,isFetching:facultiesFatching}=useFindFacultyWithCourseQuery(courseid ,{skip:!courseid})
+
+
   // get faculty options
-  const { data: Allfaculty, isLoading: FLoading } =
-    useGetFacultyQuery(undefined);
+
   // add offercourse
   const [addOfferCourse] = useAddOfferedCourseMutation();
-  useEffect(() => {
-    if (courseid) {
-      setFaculty(Allfaculty.data);
-      console.log("faculty", faculty);
-      // created OPtions
-      const facultyselctedOptions = faculty?.map((item: any) => ({
-        label: item?.name,
-        value: item?._id,
-      }));
-
-      setFacultyOptions(facultyselctedOptions);
-    }
-  }, [courseid, Allfaculty, faculty]);
-
+  
   //loading
-  if (aLoading || rLoading || adLoading || cLoading || FLoading) {
+  if (aLoading || rLoading || adLoading || cLoading ) {
     return <p>Loading...</p>;
   }
   // created OPtions
@@ -82,6 +74,12 @@ const OfferCourse = () => {
   // created OPtions
   const courseOptions = course?.data?.map((item: any) => ({
     label: `${item.title} (${item.code})`,
+    value: item._id,
+  }));
+  // faculty OPtions
+  // console.log(courseFaculty);
+  const courseFacultyOptions = courseFaculty?.data?.faculties?.map((item: any) => ({
+    label: item.name,
     value: item._id,
   }));
 
@@ -146,21 +144,21 @@ const OfferCourse = () => {
           <PhSelect
             name="faculty"
             label="Faculty"
-            disabled={!courseid}
-            options={facultyOptions}
+            disabled={!courseid || facultiesFatching}
+            options={courseFacultyOptions}
+            
           ></PhSelect>
 
           <PhInput
             name="maxCapacity"
             label="Max Capacity"
             type="text"
-            disabled={!courseid}
+            
           ></PhInput>
           <PhInput
             name="section"
             label="Section"
             type="text"
-            disabled={!courseid}
           ></PhInput>
 
           <PhSelect
@@ -168,20 +166,18 @@ const OfferCourse = () => {
             label="Days"
             mode="multiple"
             options={dayOptions}
-            disabled={!courseid}
           ></PhSelect>
-          <PhInput
-            name="startTime"
-            label="Start Time"
-            type="text"
-            disabled={!courseid}
-          ></PhInput>
-          <PhInput
-            name="endTime"
-            label="end Time"
-            type="text"
-            disabled={!courseid}
-          ></PhInput>
+         
+          <PhTimePicker
+          name="startTime"
+          label="Start Time"
+          ></PhTimePicker>
+
+          <PhTimePicker
+          name="endTime"
+          label="End Time"
+          ></PhTimePicker>
+          
           <Flex justify="end" className="mt-5">
             <Button htmlType="submit" type="primary">
               submit

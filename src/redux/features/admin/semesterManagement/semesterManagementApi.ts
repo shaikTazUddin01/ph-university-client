@@ -18,7 +18,7 @@ export const semesterManagementApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse:(response:TResponseRedux<TSemesterRegistration[]>)=>{
-        console.log("object--->",response);
+        // console.log("object--->",response);
         return{
           data:response?.data
         }    

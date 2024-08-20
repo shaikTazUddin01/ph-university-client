@@ -15,7 +15,7 @@ interface TDataType {
 const AcademicSemester = () => {
   const { data: academicSemester, isLoading } =
     useAcademicSemesterQuery(undefined);
-  console.log(academicSemester);
+  // console.log(academicSemester);
 
   if (isLoading) {
     return <p>Loading...</p>;
