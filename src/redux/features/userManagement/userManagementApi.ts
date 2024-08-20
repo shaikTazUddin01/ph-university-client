@@ -53,6 +53,12 @@ const userManagementApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getFacultyByCourse: builder.query({
+      query: (id) => ({
+        url: `/faculty/${id}`,
+        method: "GET",
+      }),
+    }),
     addFaculty: builder.mutation({
       query: (args) => {
         console.log("--->>", {faculties:args.faculties});
@@ -71,5 +77,6 @@ export const {
   useGetStudentsQuery,
   useGetSingleStudentQuery,
   useGetFacultyQuery,
+  useGetFacultyByCourseQuery,
   useAddFacultyMutation,
 } = userManagementApi;
