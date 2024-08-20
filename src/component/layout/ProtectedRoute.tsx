@@ -14,7 +14,7 @@ let user
 if (token) {
   user =verifyToken(token as string)
 }
-console.log(user);
+// console.log(user);
   const dispatch = useAppDispatch();
   // console.log(user?.role == role);
   if (role !==undefined && (user as TUser)?.role !== role) {

@@ -23,8 +23,8 @@ const Login = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (data: Record<string, string>) => {
-    console.log(data);
-    const toastId = toast.loading("Loading...");
+    // console.log(data);
+    // const toastId = toast.loading("Loading...");
     try {
       const userInFo = {
         id: data.id,
@@ -40,10 +40,13 @@ const Login = () => {
           token: res.data.accessToken,
         })
       );
-      toast.success("login success", { id: toastId, duration: 2000 });
+      if (res.data.needsPasswordChange) {
+        return navigate("/change-pass");
+      }
+      toast.success("login success", { duration: 2000 });
       navigate(`/${user.role}/dashboard`);
     } catch (error) {
-      toast.error("something is wrong", { id: toastId });
+      toast.error("something is wrong");
     }
   };
   return (

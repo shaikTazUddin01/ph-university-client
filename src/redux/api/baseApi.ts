@@ -9,6 +9,7 @@ import {
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
+import { TResponse } from "../../types";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
@@ -34,6 +35,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     // console.log(result.error.data.message);
     toast.error("not found");
   }
+  
   if (result?.error?.status == 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "post",
@@ -55,6 +57,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(logout());
     }
   }
+
+  if (result?.error?.status == 403) {
+    // console.log(result.error.data.message);
+    toast.error(result?.error?.data?.message);
+  }
+
 
   return result;
 };

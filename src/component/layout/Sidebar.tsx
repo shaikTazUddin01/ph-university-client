@@ -20,11 +20,12 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
   let sidebarItems;
 
   let user;
+  
   if (token) {
     user = verifyToken(token as string);
   }
   // const role = "admin";
-  console.log(user);
+  // console.log(user);
   switch ((user as TUser)!.role) {
     case userRole.Admin:
       sidebarItems = sidebarGenerator(adminPaths, userRole.Admin);
@@ -34,6 +35,9 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
       break;
     case userRole.Student:
       sidebarItems = sidebarGenerator(studentPaths, userRole.Student);
+      break;
+
+    default:
       break;
   }
 
