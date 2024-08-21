@@ -22,14 +22,7 @@ export const courseManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    // updateSemesterRegistration: builder.mutation({
-    //   query: (args) => ({
-    //     url: `/semesterRegistration/${args.id}`,
-    //     method: "PATCH",
-    //     body: {status:args.status},
-    //   }),
-    //   invalidatesTags:['semester']
-    // }),
+
   }),
 });
 

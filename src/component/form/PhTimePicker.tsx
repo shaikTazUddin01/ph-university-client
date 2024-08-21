@@ -18,7 +18,7 @@ const PhTimePicker = ({  name, label }:TDatePickerProps) => {
         <TimePicker
         {...field} style={{width:'100%'}}
          className="rounded-md px-2 py-1"
-         format={"HH:mm"}
+          format="HH:mm"
         />
         )}
       />

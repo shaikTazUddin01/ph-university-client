@@ -20,6 +20,7 @@ import { TResponse } from "../../../types";
 import { toast } from "sonner";
 import PhTimePicker from "../../../component/form/PhTimePicker";
 import { useFindFacultyWithCourseQuery } from "../../../redux/features/userManagement/userManagementApi";
+import moment from "moment";
 
 
 const OfferCourse = () => {
@@ -85,7 +86,7 @@ const OfferCourse = () => {
 
   //handle submit
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    console.log(data.startTime,data.endTime);
     const toastId = toast.loading("creating...");
     // // const name = nameOptions[Number(data?.name) - 1]?.label;
     const OfferedCourse = {
@@ -93,6 +94,8 @@ const OfferCourse = () => {
 
       maxCapacity: Number(data.maxCapacity),
       section: Number(data.section),
+      startTime: moment(new Date(data.startTime)).format('HH:mm'),
+      endTime: moment(new Date(data.endTime)).format('HH:mm'),
     };
     // // console.log(object);
 
